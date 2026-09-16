@@ -17,7 +17,7 @@
 
 数据存储在 Cloudflare D1 数据库中，通过 Worker 与数据库交互。
 
-[使用文档](https://cwd.js.org) · [社区交流](https://zs.discourse.group)
+[使用文档](https://cwd.js.org) · [社区交流](https://github.com/anghunk/cwd/discussions)
 
 </div>
 

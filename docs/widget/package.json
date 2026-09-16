@@ -5,6 +5,10 @@
   "type": "module",
   "author": "anghunk",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anghunk/cwd"
+  },
   "main": "./dist/cwd.umd.js",
   "module": "./dist/cwd.es.js",
   "types": "./dist/index.d.ts",

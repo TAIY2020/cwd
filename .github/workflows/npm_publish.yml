@@ -20,11 +20,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      # 不设置 registry-url：setup-node 会写入带占位 token 的 .npmrc，导致 npm 走 token 分支而跳过 OIDC
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          registry-url: "https://registry.npmjs.org"
 
       # Trusted Publishing 需要 npm CLI 11.5.1 以上，Node 22 自带的是 10.x
       - name: Update npm

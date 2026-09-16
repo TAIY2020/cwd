@@ -1,7 +1,8 @@
 import { Context } from 'hono';
 import { Bindings } from '../../bindings';
 import { checkContent } from '../public/postComment';
-import xss from 'xss';
+import { marked } from 'marked';
+import xss, { whiteList as defaultWhiteList } from 'xss';
 import { parseMarkdown } from '../../utils/markdown';
 
 export const updateComment = async (c: Context<{ Bindings: Bindings }>) => {
@@ -115,7 +116,7 @@ export const updateComment = async (c: Context<{ Bindings: Bindings }>) => {
   const html = await parseMarkdown(cleanedContent);
   const contentHtml = xss(html, {
     whiteList: {
-      ...xss.whiteList,
+      ...defaultWhiteList,
       code: ['class'],
       span: ['class', 'style'],
       pre: ['class'],

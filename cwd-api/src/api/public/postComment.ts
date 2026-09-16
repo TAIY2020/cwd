@@ -3,6 +3,7 @@ import { UAParser } from 'ua-parser-js';
 import { marked } from 'marked';
 import xss, { whiteList as defaultWhiteList } from 'xss';
 import { Bindings } from '../../bindings';
+import { parseMarkdown } from '../../utils/markdown';
 import {
   sendCommentNotification,
   sendCommentReplyNotification,
@@ -134,7 +135,7 @@ export const postComment = async (c: Context<{ Bindings: Bindings }>) => {
   const name = checkContent(rawName);
 
   // Markdown 渲染与 XSS 过滤
-  const html = await marked.parse(cleanedContent, { async: true });
+  const html = await parseMarkdown(cleanedContent);
   const contentHtml = xss(html, {
     whiteList: {
       ...defaultWhiteList,

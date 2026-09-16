@@ -133,6 +133,8 @@ npx wrangler secret put TURNSTILE_SECRET_KEY
 
 `TURNSTILE_SITE_KEY` 和可选的 `TURNSTILE_ALLOWED_HOSTNAMES` 可以作为普通 Worker 变量配置。只有同时配置私密密钥和站点密钥时，前端才会显示验证码。服务端在检测到私密密钥后会强制校验 Turnstile token、`action=comment` 和可选的允许域名，因此不要只配置私密密钥，否则前端无法取得站点密钥，评论请求会被拒绝。
 
+密钥的申请和本地调试方式见[人机验证 Turnstile](/guide/turnstile)。
+
 
 ## 参考模板
 

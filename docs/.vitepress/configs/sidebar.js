@@ -5,6 +5,7 @@ export const rootSidebar = [
 			{ text: '项目介绍', link: '/guide/getting-started' },
 			{ text: '后端配置', link: '/guide/backend-config' },
 			{ text: '前端配置', link: '/guide/frontend-config' },
+			{ text: '人机验证', link: '/guide/turnstile' },
 			{ text: '更新部署', link: '/guide/update-version' },
 		],
 	},

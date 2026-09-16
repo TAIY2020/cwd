@@ -26,6 +26,10 @@ jobs:
           node-version: "22"
           registry-url: "https://registry.npmjs.org"
 
+      # Trusted Publishing 需要 npm CLI 11.5.1 以上，Node 22 自带的是 10.x
+      - name: Update npm
+        run: npm install -g npm@11
+
       - name: Get local package info
         id: pkg
         working-directory: docs/widget

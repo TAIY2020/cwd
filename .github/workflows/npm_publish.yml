@@ -28,7 +28,9 @@ jobs:
 
       # Trusted Publishing 需要 npm CLI 11.5.1 以上，Node 22 自带的是 10.x
       - name: Update npm
-        run: npm install -g npm@11
+        run: |
+          npm install -g npm@11
+          npm --version
 
       - name: Get local package info
         id: pkg

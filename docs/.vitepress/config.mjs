@@ -29,7 +29,6 @@ export default defineConfig({
 			pattern: 'https://github.com/anghunk/cwd/blob/main/docs/:path',
 			text: '在 GitHub 上编辑此页面',
 		},
-		socialLinks: [{ icon: 'github', link: 'https://github.com/anghunk/cwd/discussions' }],
 		lastUpdated: true,
 		lastUpdatedText: '最后更新于',
 		footer: {

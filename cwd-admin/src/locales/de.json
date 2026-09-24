@@ -134,6 +134,7 @@
         "viewBackups": "Backups anzeigen",
         "loadingBackups": "Laden...",
         "backupListTitle": "S3 Backup-Liste",
+        "close": "Schließen",
         "emptyBackupList": "Keine Backup-Dateien",
         "download": "Herunterladen",
         "delete": "Löschen",

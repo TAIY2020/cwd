@@ -134,6 +134,7 @@
         "viewBackups": "백업 보기",
         "loadingBackups": "로딩 중...",
         "backupListTitle": "S3 백업 목록",
+        "close": "닫기",
         "emptyBackupList": "백업 파일 없음",
         "download": "다운로드",
         "delete": "삭제",

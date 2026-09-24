@@ -1,9 +1,20 @@
 <template>
-  <div v-if="visible" class="modal-overlay" @click.self="handleClose">
+  <div
+    v-if="visible"
+    class="modal-overlay s3-backup-overlay"
+    @click.self="handleClose"
+  >
     <div class="modal s3-backup-modal">
       <div class="modal-header">
         <h3 class="modal-title">{{ t("data.sections.s3.backupListTitle") }}</h3>
-        <button class="modal-close" @click="handleClose">&times;</button>
+        <button
+          type="button"
+          class="modal-close"
+          :aria-label="t('data.sections.s3.close')"
+          @click="handleClose"
+        >
+          <PhX :size="18" />
+        </button>
       </div>
       <div class="modal-content">
         <div v-if="loading" class="loading">
@@ -24,23 +35,23 @@
             </div>
             <div class="backup-actions">
               <button
+                type="button"
                 class="backup-btn download"
+                :aria-label="t('data.sections.s3.download')"
                 @click="handleDownload(item.key)"
                 :title="t('data.sections.s3.download')"
               >
-                <svg viewBox="0 0 24 24" width="16" height="16">
-                  <path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                </svg>
+                <PhDownloadSimple :size="16" />
               </button>
               <button
+                type="button"
                 class="backup-btn delete"
+                :aria-label="t('data.sections.s3.delete')"
                 @click="handleDelete(item.key)"
                 :disabled="deletingKey === item.key"
                 :title="t('data.sections.s3.delete')"
               >
-                <svg v-if="deletingKey !== item.key" viewBox="0 0 24 24" width="16" height="16">
-                  <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-                </svg>
+                <PhTrash v-if="deletingKey !== item.key" :size="16" />
                 <span v-else class="loading-spinner small"></span>
               </button>
             </div>
@@ -164,62 +175,88 @@ watch(
 </script>
 
 <style scoped lang="less">
-.s3-backup-modal {
-  max-width: 600px;
-  width: 90%;
-  max-height: 70vh;
+.modal-overlay.s3-backup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--admin-space-4);
+  background-color: var(--admin-overlay);
+}
+
+.s3-backup-modal {
+  display: flex;
+  width: min(600px, 100%);
+  max-height: calc(100dvh - 32px);
   flex-direction: column;
+  gap: var(--admin-space-4);
+  padding: var(--admin-space-5);
+  overflow: hidden;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--admin-radius-md);
+  box-shadow: var(--admin-shadow-md);
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: var(--admin-space-3);
+  padding-bottom: var(--admin-space-3);
   border-bottom: 1px solid var(--border-color);
-  padding-bottom: 5px;
 }
 
 .modal-title {
   margin: 0;
+  color: var(--text-primary);
   font-size: 16px;
   font-weight: 600;
-  color: var(--text-primary);
+  line-height: 1.4;
 }
 
 .modal-close {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: var(--text-secondary);
-  padding: 0;
-  width: 32px;
-  height: 32px;
-  display: flex;
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
-  transition: all 0.2s;
+  padding: 0;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--admin-radius-sm);
+  cursor: pointer;
+  transition:
+    color var(--admin-transition),
+    background-color var(--admin-transition),
+    border-color var(--admin-transition);
 }
 
 .modal-close:hover {
-  background: var(--bg-secondary);
   color: var(--text-primary);
+  background-color: var(--bg-hover);
+  border-color: var(--border-color);
 }
 
 .modal-content {
-  overflow-y: auto;
   flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .loading {
   display: flex;
+  min-height: 180px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px;
-  gap: 8px;
+  gap: var(--admin-space-2);
+  padding: var(--admin-space-8);
 }
 
 .loading-spinner {
@@ -238,30 +275,31 @@ watch(
 
 .loading-text {
   color: var(--text-secondary);
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .empty-backup-list {
-  text-align: center;
-  padding: 40px;
+  padding: var(--admin-space-8) var(--admin-space-4);
   color: var(--text-secondary);
+  font-size: 13px;
+  text-align: center;
 }
 
 .backup-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--admin-space-2);
 }
 
 .backup-item {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 12px;
+  align-items: flex-start;
+  gap: var(--admin-space-3);
+  padding: var(--admin-space-3);
+  background-color: var(--bg-sider);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  background: var(--bg-secondary);
-  gap: 12px;
+  border-radius: var(--admin-radius-sm);
 }
 
 .backup-info {
@@ -270,51 +308,57 @@ watch(
 }
 
 .backup-name {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-primary);
-  white-space: nowrap;
+  margin-bottom: var(--admin-space-1);
   overflow: hidden;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 500;
   text-overflow: ellipsis;
-  margin-bottom: 4px;
+  white-space: nowrap;
 }
 
 .backup-meta {
   display: flex;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: var(--admin-space-2);
+  align-items: center;
   font-size: 12px;
   color: var(--text-secondary);
 }
 
 .backup-size {
-  background: var(--bg-primary);
   padding: 2px 8px;
-  border-radius: 4px;
+  background-color: var(--bg-hover);
+  border-radius: var(--admin-radius-sm);
 }
 
 .backup-actions {
   display: flex;
-  gap: 8px;
+  gap: var(--admin-space-1);
   flex-shrink: 0;
 }
 
 .backup-btn {
-  width: 32px;
-  height: 32px;
-  border: 1px solid var(--border-color);
-  background: var(--bg-primary);
-  border-radius: 6px;
-  cursor: pointer;
-  display: flex;
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
   align-items: center;
   justify-content: center;
+  padding: 0;
   color: var(--text-secondary);
-  transition: all 0.2s;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--admin-radius-sm);
+  cursor: pointer;
+  transition:
+    color var(--admin-transition),
+    background-color var(--admin-transition),
+    border-color var(--admin-transition);
 }
 
 .backup-btn:hover:not(:disabled) {
-  background: var(--bg-hover);
   color: var(--text-primary);
+  background-color: var(--bg-hover);
   border-color: var(--border-hover);
 }
 
@@ -323,12 +367,31 @@ watch(
 }
 
 .backup-btn.delete:hover {
-  color: #ef4444;
+  color: var(--color-danger);
+  background-color: var(--admin-danger-soft);
+  border-color: var(--color-danger);
 }
 
 .backup-btn:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .modal-overlay.s3-backup-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .s3-backup-modal {
+    width: 100%;
+    max-height: 88dvh;
+    padding: 20px 16px 24px;
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
+    border-radius: var(--admin-radius-md) var(--admin-radius-md) 0 0;
+  }
 }
 
 @keyframes spin {

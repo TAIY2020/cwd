@@ -134,6 +134,7 @@
         "viewBackups": "查看備份",
         "loadingBackups": "加載中...",
         "backupListTitle": "S3 備份列表",
+        "close": "關閉",
         "emptyBackupList": "暫無備份文件",
         "download": "下載",
         "delete": "刪除",

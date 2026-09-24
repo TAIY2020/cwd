@@ -1,6 +1,48 @@
 <template>
   <div class="page">
     <h2 class="page-title">{{ t("settings.title") }}</h2>
+    <div v-if="!loading" class="settings-tabs">
+      <button
+        type="button"
+        class="settings-tab"
+        :class="{ 'settings-tab-active': activeTab === 'comment' }"
+        @click="activeTab = 'comment'"
+      >
+        {{ t("settings.tabs.comment") }}
+      </button>
+      <button
+        type="button"
+        class="settings-tab"
+        :class="{ 'settings-tab-active': activeTab === 'feature' }"
+        @click="activeTab = 'feature'"
+      >
+        {{ t("settings.tabs.feature") }}
+      </button>
+      <button
+        type="button"
+        class="settings-tab"
+        :class="{ 'settings-tab-active': activeTab === 'emailNotify' }"
+        @click="activeTab = 'emailNotify'"
+      >
+        {{ t("settings.tabs.emailNotify") }}
+      </button>
+      <button
+        type="button"
+        class="settings-tab"
+        :class="{ 'settings-tab-active': activeTab === 'telegramNotify' }"
+        @click="activeTab = 'telegramNotify'"
+      >
+        {{ t("settings.tabs.telegramNotify") }}
+      </button>
+      <button
+        type="button"
+        class="settings-tab"
+        :class="{ 'settings-tab-active': activeTab === 'display' }"
+        @click="activeTab = 'display'"
+      >
+        {{ t("settings.tabs.display") }}
+      </button>
+    </div>
     <div
       v-if="toastVisible"
       class="toast"
@@ -10,48 +52,6 @@
     </div>
     <div v-if="loading" class="page-hint">{{ t("common.loading") }}</div>
     <div v-else>
-      <div class="settings-tabs">
-        <button
-          type="button"
-          class="settings-tab"
-          :class="{ 'settings-tab-active': activeTab === 'comment' }"
-          @click="activeTab = 'comment'"
-        >
-          {{ t("settings.tabs.comment") }}
-        </button>
-        <button
-          type="button"
-          class="settings-tab"
-          :class="{ 'settings-tab-active': activeTab === 'feature' }"
-          @click="activeTab = 'feature'"
-        >
-          {{ t("settings.tabs.feature") }}
-        </button>
-        <button
-          type="button"
-          class="settings-tab"
-          :class="{ 'settings-tab-active': activeTab === 'emailNotify' }"
-          @click="activeTab = 'emailNotify'"
-        >
-          {{ t("settings.tabs.emailNotify") }}
-        </button>
-        <button
-          type="button"
-          class="settings-tab"
-          :class="{ 'settings-tab-active': activeTab === 'telegramNotify' }"
-          @click="activeTab = 'telegramNotify'"
-        >
-          {{ t("settings.tabs.telegramNotify") }}
-        </button>
-        <button
-          type="button"
-          class="settings-tab"
-          :class="{ 'settings-tab-active': activeTab === 'display' }"
-          @click="activeTab = 'display'"
-        >
-          {{ t("settings.tabs.display") }}
-        </button>
-      </div>
       <transition name="tab-fade" mode="out-in">
         <div :key="activeTab" class="settings-content">
           <template v-if="activeTab === 'comment'">
@@ -193,9 +193,8 @@
                   }}</label>
                   <textarea
                     v-model="commentPlaceholder"
-                    class="form-input"
+                    class="form-input form-textarea-placeholder"
                     rows="3"
-                    style="height: 90px; resize: none"
                     :placeholder="t('settings.feature.placeholderHint')"
                   ></textarea>
                   <div class="form-hint">
@@ -228,9 +227,8 @@
                   }}</label>
                   <textarea
                     v-model="emotionJson"
-                    class="form-input"
+                    class="form-input form-textarea-code"
                     rows="10"
-                    style="height: 220px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
                     :placeholder="t('settings.feature.emotionJsonHint')"
                   ></textarea>
                   <div class="form-hint">
@@ -431,7 +429,7 @@
                 >
                   {{ message }}
                 </div>
-                <div class="card-actions" style="justify-content: space-between">
+                <div class="card-actions card-actions-email">
                   <button
                     class="card-button secondary"
                     :disabled="testingEmail"
@@ -444,7 +442,6 @@
                   </button>
                   <button
                     class="card-button secondary"
-                    style="margin-left: auto"
                     @click="resetTemplatesToDefault"
                   >
                     {{ t("settings.emailNotify.resetBtn") }}
@@ -504,7 +501,7 @@
                   ></div>
                 </div>
 
-                <div class="card-actions" style="justify-content: space-between">
+                <div class="card-actions card-actions-telegram">
                   <button
                     class="card-button secondary"
                     :disabled="settingUpWebhook"
@@ -519,7 +516,6 @@
                     class="card-button secondary"
                     :disabled="testingTelegram"
                     @click="testTelegram"
-                    style="margin-right: auto"
                   >
                     <span v-if="testingTelegram">{{
                       t("settings.telegramNotify.testingBtn")

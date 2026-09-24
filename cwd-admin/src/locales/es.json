@@ -134,6 +134,7 @@
         "viewBackups": "Ver copias de seguridad",
         "loadingBackups": "Cargando...",
         "backupListTitle": "Lista de copias de seguridad S3",
+        "close": "Cerrar",
         "emptyBackupList": "No hay archivos de copia de seguridad",
         "download": "Descargar",
         "delete": "Eliminar",

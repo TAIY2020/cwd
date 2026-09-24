@@ -134,6 +134,7 @@
         "viewBackups": "عرض النسخ الاحتياطية",
         "loadingBackups": "جارٍ التحميل...",
         "backupListTitle": "قائمة نسخ S3 الاحتياطية",
+        "close": "إغلاق",
         "emptyBackupList": "لا توجد ملفات نسخ احتياطي",
         "download": "تحميل",
         "delete": "حذف",

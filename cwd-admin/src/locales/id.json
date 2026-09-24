@@ -134,6 +134,7 @@
         "viewBackups": "Lihat Cadangan",
         "loadingBackups": "Memuat...",
         "backupListTitle": "Daftar Cadangan S3",
+        "close": "Tutup",
         "emptyBackupList": "Tidak ada file cadangan",
         "download": "Unduh",
         "delete": "Hapus",

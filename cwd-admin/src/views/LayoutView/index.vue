@@ -80,45 +80,60 @@
           </select>
         </div>
         <ul class="menu">
-          <li
-            class="menu-item"
-            :class="{ active: isRouteActive('comments') }"
-            @click="goComments"
-          >
-            <PhChatCircleDots class="menu-item-icon" :size="18" />
-            <span>{{ t("menu.comments") }}</span>
+          <li>
+            <button
+              class="menu-item"
+              :class="{ active: isRouteActive('comments') }"
+              type="button"
+              @click="goComments"
+            >
+              <PhChatCircleDots class="menu-item-icon" :size="18" />
+              <span>{{ t("menu.comments") }}</span>
+            </button>
           </li>
-          <li
-            class="menu-item"
-            :class="{ active: isRouteActive('stats') }"
-            @click="goStats"
-          >
-            <PhSquaresFour class="menu-item-icon" :size="18" />
-            <span>{{ t("menu.stats") }}</span>
+          <li>
+            <button
+              class="menu-item"
+              :class="{ active: isRouteActive('stats') }"
+              type="button"
+              @click="goStats"
+            >
+              <PhSquaresFour class="menu-item-icon" :size="18" />
+              <span>{{ t("menu.stats") }}</span>
+            </button>
           </li>
-          <li
-            class="menu-item"
-            :class="{ active: isRouteActive('analytics') }"
-            @click="goAnalytics"
-          >
-            <PhChartBar class="menu-item-icon" :size="18" />
-            <span>{{ t("menu.analytics") }}</span>
+          <li>
+            <button
+              class="menu-item"
+              :class="{ active: isRouteActive('analytics') }"
+              type="button"
+              @click="goAnalytics"
+            >
+              <PhChartBar class="menu-item-icon" :size="18" />
+              <span>{{ t("menu.analytics") }}</span>
+            </button>
           </li>
-          <li
-            class="menu-item"
-            :class="{ active: isRouteActive('settings') }"
-            @click="goSettings"
-          >
-            <PhGear class="menu-item-icon" :size="18" />
-            <span>{{ t("menu.settings") }}</span>
+          <li>
+            <button
+              class="menu-item"
+              :class="{ active: isRouteActive('settings') }"
+              type="button"
+              @click="goSettings"
+            >
+              <PhGear class="menu-item-icon" :size="18" />
+              <span>{{ t("menu.settings") }}</span>
+            </button>
           </li>
-          <li
-            class="menu-item"
-            :class="{ active: isRouteActive('data') }"
-            @click="goData"
-          >
-            <PhDatabase class="menu-item-icon" :size="18" />
-            <span>{{ t("menu.data") }}</span>
+          <li>
+            <button
+              class="menu-item"
+              :class="{ active: isRouteActive('data') }"
+              type="button"
+              @click="goData"
+            >
+              <PhDatabase class="menu-item-icon" :size="18" />
+              <span>{{ t("menu.data") }}</span>
+            </button>
           </li>
         </ul>
         <div class="layout-sider-footer" @click="openVersionModal">
@@ -133,19 +148,30 @@
         <router-view />
       </main>
     </div>
-    <div v-if="versionModalVisible" class="modal-overlay" @click.self="closeVersionModal">
-      <div class="modal">
-        <h3 class="modal-title">{{ t("layout.version.title") }}</h3>
-        <div class="modal-body">
-          <p class="modal-row">
-            <span class="modal-label">{{ t("layout.version.apiAddress") }}</span>
-            <span class="modal-value">{{
+    <div
+      v-if="versionModalVisible"
+      class="version-modal-overlay"
+      @click.self="closeVersionModal"
+    >
+      <div
+        class="version-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="version-modal-title"
+      >
+        <h3 id="version-modal-title" class="version-modal-title">
+          {{ t("layout.version.title") }}
+        </h3>
+        <div class="version-modal-body">
+          <p class="version-modal-row">
+            <span class="version-modal-label">{{ t("layout.version.apiAddress") }}</span>
+            <span class="version-modal-value">{{
               checkedApiBaseUrl || t("layout.version.notConfigured")
             }}</span>
           </p>
-          <p class="modal-row">
-            <span class="modal-label">{{ t("layout.version.apiVersion") }}</span>
-            <span class="modal-value">
+          <p class="version-modal-row">
+            <span class="version-modal-label">{{ t("layout.version.apiVersion") }}</span>
+            <span class="version-modal-value">
               {{
                 apiVersion ||
                 (apiVersionError
@@ -154,22 +180,24 @@
               }}
             </span>
           </p>
-          <p class="modal-row">
-            <span class="modal-label">{{ t("layout.version.adminVersion") }}</span>
-            <span class="modal-value">{{ adminVersion }}</span>
+          <p class="version-modal-row">
+            <span class="version-modal-label">{{ t("layout.version.adminVersion") }}</span>
+            <span class="version-modal-value">{{ adminVersion }}</span>
           </p>
-          <p v-if="apiVersion && apiVersion === adminVersion" class="modal-status">
-            {{ t("layout.version.match") }}
-          </p>
-          <p v-else-if="apiVersion && apiVersion !== adminVersion" class="modal-status">
-            {{ t("layout.version.mismatch") }}
-          </p>
-          <p v-else-if="apiVersionError" class="modal-status">
-            {{ t("layout.version.fetchError") }} {{ apiVersionError }}
+          <p
+            v-if="versionStatusText"
+            class="version-modal-status"
+            :class="versionStatusClass"
+          >
+            {{ versionStatusText }}
           </p>
         </div>
-        <div class="modal-actions">
-          <button class="modal-btn" type="button" @click="closeVersionModal">
+        <div class="version-modal-actions">
+          <button
+            class="version-modal-btn"
+            type="button"
+            @click="closeVersionModal"
+          >
             {{ t("layout.version.ok") }}
           </button>
         </div>
@@ -209,6 +237,23 @@ const themeTitle = computed(() => {
   if (theme.value === "light") return t("layout.theme.light");
   if (theme.value === "dark") return t("layout.theme.dark");
   return t("layout.theme.system");
+});
+
+const versionStatusClass = computed(() => {
+  if (!apiVersion.value) return apiVersionError.value ? "is-error" : "";
+  return apiVersion.value === adminVersion.value ? "is-match" : "is-mismatch";
+});
+
+const versionStatusText = computed(() => {
+  if (apiVersion.value) {
+    return apiVersion.value === adminVersion.value
+      ? t("layout.version.match")
+      : t("layout.version.mismatch");
+  }
+  if (apiVersionError.value) {
+    return `${t("layout.version.fetchError")} ${apiVersionError.value}`;
+  }
+  return "";
 });
 
 function cycleTheme() {
@@ -380,85 +425,175 @@ function closeVersionModal() {
 
 <style lang="less">
 @import "../../styles/layout.less";
-.modal-overlay {
+
+.version-modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2000;
+  padding: var(--admin-space-4);
+  background-color: var(--admin-overlay);
 }
 
-.modal {
-  background-color: var(--bg-card);
-  border-radius: 10px;
-  max-width: 420px;
-  width: 100%;
-  margin: 10px;
-  padding: 20px 20px 18px;
-  box-shadow: var(--shadow-card);
+.version-modal {
   display: flex;
+  width: min(100%, 440px);
+  max-height: calc(100dvh - 32px);
   flex-direction: column;
-  gap: 14px;
+  gap: var(--admin-space-4);
+  padding: var(--admin-space-5);
+  overflow-y: auto;
+  color: var(--text-primary);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--admin-radius-md);
+  box-shadow: var(--admin-shadow-md);
+  animation: version-modal-in 180ms ease-out;
 }
 
-.modal-title {
+.version-modal-title {
   margin: 0;
   font-size: 16px;
+  line-height: 1.4;
   font-weight: 600;
   color: var(--text-primary);
 }
 
-.modal-body {
+.version-modal-body {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--admin-space-3);
   font-size: 13px;
   color: var(--text-secondary);
 }
 
-.modal-row {
+.version-modal-row {
   margin: 0;
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--admin-space-4);
+  line-height: 1.5;
 }
 
-.modal-label {
-  flex: 0 0 auto;
+.version-modal-label {
+  color: var(--text-secondary);
+  white-space: nowrap;
 }
 
-.modal-value {
-  flex: 1 1 auto;
+.version-modal-value {
+  min-width: 0;
+  color: var(--text-primary);
   text-align: right;
   word-break: break-all;
 }
 
-.modal-status {
-  margin: 4px 0 0;
+.version-modal-status {
+  margin: var(--admin-space-1) 0 0;
+  padding: var(--admin-space-2) 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--admin-radius-sm);
   font-size: 13px;
-  color: var(--text-primary);
+  line-height: 1.5;
+  background-color: var(--bg-hover);
 }
 
-.modal-actions {
+.version-modal-status.is-match {
+  color: var(--color-success);
+  background-color: var(--admin-success-soft);
+  border-color: color-mix(in srgb, var(--color-success) 30%, transparent);
+}
+
+.version-modal-status.is-mismatch {
+  color: var(--color-warning);
+  background-color: var(--admin-warning-soft);
+  border-color: color-mix(in srgb, var(--color-warning) 30%, transparent);
+}
+
+.version-modal-status.is-error {
+  color: var(--color-danger);
+  background-color: var(--admin-danger-soft);
+  border-color: color-mix(in srgb, var(--color-danger) 30%, transparent);
+}
+
+.version-modal-actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 6px;
 }
 
-.modal-btn {
-  padding: 8px 16px;
-  border-radius: 999px;
-  border: none;
-  font-size: 14px;
-  cursor: pointer;
-  background-color: var(--primary-color);
+.version-modal-btn {
+  display: inline-flex;
+  min-height: var(--admin-control-height);
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
   color: var(--text-inverse);
+  background-color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: var(--admin-radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color var(--admin-transition),
+    border-color var(--admin-transition),
+    box-shadow var(--admin-transition);
 }
 
-.modal-btn:focus-visible {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 2px;
+.version-modal-btn:hover {
+  background-color: var(--admin-primary-hover);
+  border-color: var(--admin-primary-hover);
+}
+
+.version-modal-btn:active {
+  background-color: var(--admin-primary-active);
+  border-color: var(--admin-primary-active);
+}
+
+.version-modal-btn:focus-visible {
+  box-shadow: var(--admin-focus-ring);
+}
+
+@media (max-width: 640px) {
+  .version-modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .version-modal {
+    width: 100%;
+    max-height: 88dvh;
+    padding: 20px 16px 24px;
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
+    border-radius: var(--admin-radius-md) var(--admin-radius-md) 0 0;
+  }
+
+  .version-modal-actions .version-modal-btn {
+    min-height: var(--admin-control-height-lg);
+    flex: 1;
+  }
+
+  .version-modal-actions {
+    position: sticky;
+    bottom: 0;
+    padding-top: var(--admin-space-3);
+    background-color: var(--bg-card);
+  }
+}
+
+@keyframes version-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 </style>

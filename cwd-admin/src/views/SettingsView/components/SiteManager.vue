@@ -21,7 +21,12 @@
             @dblclick="moveToHidden(domain)"
           >
             <span class="domain-text">{{ getSiteLabel(domain) }}</span>
-            <button class="move-btn" @click="moveToHidden(domain)" title="移出">
+            <button
+              type="button"
+              class="move-btn"
+              title="移出"
+              @click="moveToHidden(domain)"
+            >
               <PhArrowRight :size="16" />
             </button>
           </div>
@@ -30,10 +35,20 @@
 
       <!-- Actions -->
       <div class="transfer-actions">
-        <button class="action-btn" @click="moveAllToVisible" title="全部左移">
+        <button
+          type="button"
+          class="action-btn"
+          title="全部左移"
+          @click="moveAllToVisible"
+        >
           <PhCaretDoubleLeft />
         </button>
-        <button class="action-btn" @click="moveAllToHidden" title="全部右移">
+        <button
+          type="button"
+          class="action-btn"
+          title="全部右移"
+          @click="moveAllToHidden"
+        >
           <PhCaretDoubleRight />
         </button>
       </div>
@@ -51,7 +66,12 @@
             @dragstart="onDragStart($event, domain, 'hidden')"
             @dblclick="moveToVisible(domain)"
           >
-            <button class="move-btn" @click="moveToVisible(domain)" title="移入">
+            <button
+              type="button"
+              class="move-btn"
+              title="移入"
+              @click="moveToVisible(domain)"
+            >
               <PhArrowLeft :size="16" />
             </button>
             <span class="domain-text">{{ getSiteLabel(domain) }}</span>
@@ -61,7 +81,7 @@
     </div>
 
     <div class="form-actions">
-      <button class="btn-primary" @click="handleSave" :disabled="loading">
+      <button class="card-button" :disabled="loading" @click="handleSave">
         {{ loading ? "保存中..." : "保存" }}
       </button>
     </div>
@@ -179,77 +199,79 @@ onMounted(() => {
 .domain-settings {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--admin-space-5);
 }
 
 .domain-settings-desc {
   color: var(--text-secondary);
-  font-size: 14px;
+  font-size: 13px;
+  line-height: 1.6;
 }
 
 .domain-transfer {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: var(--admin-space-5);
   height: 400px;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    height: auto;
-  }
 }
 
 .transfer-panel {
-  flex: 1;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
   display: flex;
-  flex-direction: column;
+  min-width: 0;
   height: 100%;
-  background: var(--bg-card);
   min-height: 300px;
-  width: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--admin-radius-md);
 }
 
 .transfer-header {
-  padding: 12px 16px;
+  padding: var(--admin-space-3) var(--admin-space-4);
+  color: var(--text-primary);
+  background-color: var(--bg-sider);
   border-bottom: 1px solid var(--border-color);
   font-weight: 600;
-  background: var(--bg-body);
-  border-radius: 8px 8px 0 0;
-  color: var(--text-primary);
 }
 
 .transfer-body {
-  flex: 1;
-  overflow-y: auto;
-  padding: 10px;
   display: flex;
+  flex: 1;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--admin-space-1);
+  padding: var(--admin-space-2);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .transfer-empty {
-  text-align: center;
-  color: var(--text-secondary);
   margin-top: 40px;
+  color: var(--text-secondary);
   font-size: 13px;
+  text-align: center;
 }
 
 .transfer-item {
   display: flex;
+  min-height: 40px;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
-  background: var(--bg-body);
-  border-radius: 6px;
+  gap: var(--admin-space-2);
+  padding: var(--admin-space-2) var(--admin-space-3);
+  color: var(--text-primary);
+  background-color: var(--bg-sider);
+  border: 1px solid transparent;
+  border-radius: var(--admin-radius-sm);
   cursor: grab;
   user-select: none;
-  transition: background 0.2s;
-  color: var(--text-primary);
+  transition:
+    background-color var(--admin-transition),
+    border-color var(--admin-transition);
 
   &:hover {
-    background: var(--bg-hover);
+    background-color: var(--bg-hover);
+    border-color: var(--border-color);
   }
 
   &:active {
@@ -258,75 +280,91 @@ onMounted(() => {
 
   .domain-text {
     flex: 1;
-    margin: 0 10px;
+    min-width: 0;
+    overflow-wrap: anywhere;
     word-break: break-all;
   }
 }
 
 .move-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text-secondary);
-  padding: 4px;
-  border-radius: 4px;
-  display: flex;
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
   align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--admin-radius-sm);
+  cursor: pointer;
+  transition:
+    color var(--admin-transition),
+    background-color var(--admin-transition);
 
   &:hover {
-    background: var(--bg-active);
     color: var(--primary-color);
+    background-color: var(--bg-active);
   }
 }
 
 .transfer-actions {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--admin-space-2);
   align-self: center;
-
-  @media (max-width: 768px) {
-    flex-direction: row;
-  }
 }
 
 .action-btn {
+  display: inline-flex;
   width: 36px;
   height: 36px;
-  border-radius: 50%;
-  border: 1px solid var(--border-color);
-  background: var(--bg-card);
-  color: var(--text-primary);
-  display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
+  color: var(--text-primary);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition:
+    color var(--admin-transition),
+    border-color var(--admin-transition),
+    background-color var(--admin-transition);
 
   &:hover {
-    border-color: var(--primary-color);
     color: var(--primary-color);
+    background-color: var(--bg-hover);
+    border-color: var(--primary-color);
   }
 }
 
 .form-actions {
-  margin-top: 10px;
   display: flex;
   justify-content: flex-end;
 }
 
-.btn-primary {
-  padding: 8px 24px;
-  background: var(--primary-color);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
+@media (max-width: 768px) {
+  .domain-transfer {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--admin-space-3);
+    height: auto;
+  }
 
-  &:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
+  .transfer-panel {
+    height: auto;
+    min-height: 240px;
+  }
+
+  .transfer-actions {
+    flex-direction: row;
+    justify-content: center;
+    align-self: auto;
+  }
+
+  .form-actions .card-button {
+    width: 100%;
   }
 }
 </style>

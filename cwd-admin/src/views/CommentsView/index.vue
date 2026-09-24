@@ -1,19 +1,21 @@
 <template>
   <div class="page">
-    <h2 class="page-title">{{ t("comments.title") }}</h2>
-    <div class="toolbar">
-      <div class="toolbar-left">
-        <select v-model="statusFilter" class="toolbar-select">
-          <option value="">{{ t("comments.statusFilter.all") }}</option>
-          <option value="approved">{{ t("comments.statusFilter.approved") }}</option>
-          <option value="pending">{{ t("comments.statusFilter.pending") }}</option>
-          <option value="rejected">{{ t("comments.statusFilter.rejected") }}</option>
-        </select>
-      </div>
-      <div class="toolbar-right">
-        <button class="toolbar-button" @click="goPage(1)">
-          {{ t("comments.refresh") }}
-        </button>
+    <div class="page-header">
+      <h2 class="page-title">{{ t("comments.title") }}</h2>
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <select v-model="statusFilter" class="toolbar-select">
+            <option value="">{{ t("comments.statusFilter.all") }}</option>
+            <option value="approved">{{ t("comments.statusFilter.approved") }}</option>
+            <option value="pending">{{ t("comments.statusFilter.pending") }}</option>
+            <option value="rejected">{{ t("comments.statusFilter.rejected") }}</option>
+          </select>
+        </div>
+        <div class="toolbar-right">
+          <button class="toolbar-button" @click="goPage(1)">
+            {{ t("comments.refresh") }}
+          </button>
+        </div>
       </div>
     </div>
     <div v-if="loading" class="page-hint">{{ t("common.loading") }}</div>
@@ -49,13 +51,6 @@
                       :aria-label="t('comments.table.admin')"
                       role="img"
                       class="cwd-admin-icon"
-                      style="
-                        width: 15px;
-                        height: 15px;
-                        fill: currentColor;
-                        color: #db850d;
-                        vertical-align: -0.15em;
-                      "
                     >
                       <g>
                         <path

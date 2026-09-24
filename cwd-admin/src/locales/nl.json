@@ -134,6 +134,7 @@
         "viewBackups": "Back-ups bekijken",
         "loadingBackups": "Laden...",
         "backupListTitle": "S3 Back-up lijst",
+        "close": "Sluiten",
         "emptyBackupList": "Geen back-up bestanden",
         "download": "Downloaden",
         "delete": "Verwijderen",

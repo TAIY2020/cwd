@@ -134,6 +134,7 @@
         "viewBackups": "बैकअप देखें",
         "loadingBackups": "लोड हो रहा है...",
         "backupListTitle": "S3 बैकअप सूची",
+        "close": "बंद करें",
         "emptyBackupList": "कोई बैकअप फ़ाइल नहीं",
         "download": "डाउनलोड",
         "delete": "हटाएं",

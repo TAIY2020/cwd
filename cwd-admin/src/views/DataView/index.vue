@@ -28,7 +28,7 @@
 
       <div class="action-row">
         <span class="action-label">{{ t("data.sections.comments.importLabel") }}</span>
-        <select v-model="importSource" class="form-select" style="min-width: 120px">
+        <select v-model="importSource" class="form-select form-select-auto">
           <option value="cwd">{{ t("data.sections.comments.source.cwd") }}</option>
           <option value="twikoo">{{ t("data.sections.comments.source.twikoo") }}</option>
           <option value="artalk">{{ t("data.sections.comments.source.artalk") }}</option>
@@ -160,7 +160,7 @@
         </div>
       </div>
 
-      <div class="action-row" style="margin-top: 16px">
+      <div class="action-row action-row-submit">
         <button class="card-button primary" :disabled="s3Saving" @click="handleSaveS3">
           {{ s3Saving ? t("data.sections.s3.saving") : t("data.sections.s3.save") }}
         </button>
@@ -188,7 +188,7 @@
       type="file"
       ref="fileInput"
       accept=".json,.jsonl"
-      style="display: none"
+      class="hidden-file-input"
       @change="handleFileChange"
     />
 
@@ -201,7 +201,7 @@
         </p>
         <div class="form-group">
           <label class="form-label">{{ t("data.siteIdModal.selectLabel") }}</label>
-          <select v-model="selectedSiteId" class="form-select" style="width: 100%">
+          <select v-model="selectedSiteId" class="form-select form-select-full">
             <option value="default">{{ t("layout.defaultSite") }}</option>
             <option v-for="item in siteOptions" :key="item.value" :value="item.value">
               {{ item.label }}
@@ -559,115 +559,4 @@ function cancelSiteId() {
 
 <style scoped lang="less">
 @import "../../styles/components/data.less";
-
-.form-row {
-  display: flex;
-  gap: 12px;
-  margin-top: 12px;
-}
-
-.form-group {
-  margin-top: 12px;
-}
-
-.form-group.half {
-  flex: 1;
-  margin-top: 0;
-}
-
-.form-label {
-  display: block;
-  font-size: 13px;
-  margin-bottom: 4px;
-  color: var(--text-primary);
-}
-
-/* S3 备份弹窗样式 */
-.s3-backup-modal {
-  max-width: 600px;
-  width: 90%;
-  max-height: 70vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 5px;
-}
-
-.modal-close {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: var(--text-secondary);
-  padding: 0;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  transition: all 0.2s;
-}
-
-.modal-close:hover {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-}
-
-.modal-content {
-  overflow-y: auto;
-  flex: 1;
-}
-
-.empty-backup-list {
-  text-align: center;
-  padding: 40px;
-  color: var(--text-secondary);
-}
-
-.backup-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.backup-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  background: var(--bg-secondary);
-  gap: 12px;
-}
-
-.backup-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.backup-name {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 4px;
-}
-
-.backup-meta {
-  display: flex;
-  gap: 12px;
-  font-size: 12px;
-  color: var(--text-secondary);
-}
-
 </style>

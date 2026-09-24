@@ -134,6 +134,7 @@
         "viewBackups": "Просмотр бэкапов",
         "loadingBackups": "Загрузка...",
         "backupListTitle": "Список бэкапов S3",
+        "close": "Закрыть",
         "emptyBackupList": "Нет файлов бэкапов",
         "download": "Скачать",
         "delete": "Удалить",

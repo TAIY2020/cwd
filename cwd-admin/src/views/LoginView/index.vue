@@ -2,19 +2,26 @@
   <div class="login-page">
     <div class="login-container">
       <div class="login-card">
-        <div class="login-icon"></div>
-        <div class="login-subtitle">
+        <div class="login-heading">
+          <div class="login-icon" aria-hidden="true"></div>
           <h1 class="login-title">CWD</h1>
-          - 简洁的自托管评论系统管理面板
+          <p class="login-subtitle">简洁的自托管评论系统管理面板</p>
         </div>
         <form class="login-form" @submit.prevent="handleSubmit">
           <div class="form-item">
-            <label class="form-label">API 地址</label>
-            <input v-model="apiBaseUrl" class="form-input" type="text" />
+            <label class="form-label" for="login-api-url">API 地址</label>
+            <input
+              id="login-api-url"
+              v-model="apiBaseUrl"
+              class="form-input"
+              type="url"
+              autocomplete="url"
+            />
           </div>
           <div class="form-item">
-            <label class="form-label">管理员账号</label>
+            <label class="form-label" for="login-admin-name">管理员账号</label>
             <input
+              id="login-admin-name"
               v-model="name"
               class="form-input"
               type="text"
@@ -22,9 +29,10 @@
             />
           </div>
           <div class="form-item">
-            <label class="form-label">密码</label>
+            <label class="form-label" for="login-password">密码</label>
             <div class="form-input-wrapper">
               <input
+                id="login-password"
                 v-model="password"
                 class="form-input"
                 :type="showPassword ? 'text' : 'password'"

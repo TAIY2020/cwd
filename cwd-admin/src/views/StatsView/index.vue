@@ -1,8 +1,6 @@
 <template>
   <div class="page">
-    <div style="display: flex; align-items: center; gap: 20px">
-      <h2 class="page-title">{{ t("stats.title") }}</h2>
-    </div>
+    <h2 class="page-title">{{ t("stats.title") }}</h2>
     <div
       v-if="toastVisible"
       class="toast"

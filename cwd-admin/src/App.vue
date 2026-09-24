@@ -25,7 +25,7 @@ body,
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--admin-font-sans);
   background-color: var(--bg-body);
   color: var(--text-primary);
 }

@@ -236,7 +236,7 @@
 .cwd-emotion-popover {
   position: absolute;
   left: 0;
-  bottom: calc(100% + 8px);
+  top: calc(100% + 8px);
   z-index: 20;
   width: min(360px, calc(100vw - 48px));
   max-height: 300px;
